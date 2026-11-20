@@ -1,0 +1,20 @@
+node_modules/
+ios/App/build/
+ios/App/App/public/
+android/app/build/
+android/build/
+manualbuild/assets-merged/
+manualbuild/classes/
+manualbuild/dex/
+manualbuild/gen/
+manualbuild/module/
+manualbuild/proto-x/
+manualbuild/services/
+manualbuild/flats/app.zip
+manualbuild/*.apk
+manualbuild/*.aab
+manualbuild/*.apk.idsig
+.DS_Store
+
+# Android manual-build rig stays local-only (outputs live in play-store/)
+manualbuild/

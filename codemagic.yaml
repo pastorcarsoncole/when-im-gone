@@ -1,0 +1,47 @@
+# Codemagic workflow for When I'm Gone (iOS)
+#
+# PREPARED 2026-11-19 — NOT YET RUN. The app folder must first live in a
+# hosted git repo connected to Codemagic (see app-store/API-KEY-IDS.md).
+# Codemagic signs with the App Store Connect API-key integration named
+# "Codemagic" (Key ID 2FZYV4NTR6 — Carson connected it Nov 3, 2026).
+# If the integration in Codemagic carries a different display name, fix the
+# `app_store_connect:` value below to match it exactly before the first build.
+#
+# This workflow STOPS at TestFlight. App Store submission is a separate
+# step and happens only on Carson's word.
+
+workflows:
+  ios-release:
+    name: When I'm Gone — iOS (TestFlight)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: Codemagic
+    environment:
+      vars:
+        XCODE_PROJECT: "ios/App/App.xcodeproj"   # Capacitor 8: SPM project, no .xcworkspace, no CocoaPods
+        XCODE_SCHEME: "App"
+        BUNDLE_ID: "com.victoryontherock.whenimgone"
+      node: 22
+    scripts:
+      - name: Install dependencies
+        script: npm install
+      - name: Sync Capacitor iOS project
+        script: npx cap sync ios
+      - name: Set up code signing
+        script: |
+          keychain initialize
+          export CERTIFICATE_PRIVATE_KEY="$(cat signing/certificate_private_key.pem)"
+          app-store-connect fetch-signing-files $BUNDLE_ID --type IOS_APP_STORE --create
+          keychain add-certificates
+          xcode-project use-profiles
+      - name: Build the .ipa
+        script: |
+          xcode-project build-ipa --project "$XCODE_PROJECT" --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        submit_to_app_store: false

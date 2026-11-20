@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light" />
+<link rel="icon" href="data:," />
+<title>When I'm Gone</title>
+<style>
+  :root{
+    --bg:#FBF5EA;
+    --card:#FFFDF8;
+    --ink:#2E2A24;
+    --ink-soft:#5A5348;
+    --green:#2F5D3A;
+    --green-dark:#234A2D;
+    --green-soft:#E7EFE4;
+    --brown:#7A5A38;
+    --line:#E3D7C3;
+    --amber:#FFF6E0;
+    --amber-line:#E8D194;
+    --red:#A33B2E;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:19px;line-height:1.5;
+  }
+  main{max-width:720px;margin:0 auto;padding:20px 18px 56px;}
+  h1,h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;line-height:1.2;margin:0;}
+  h1{font-size:2.1rem;color:var(--green-dark);}
+  h2{font-size:1.65rem;color:var(--green-dark);}
+  h3{font-family:Georgia,serif;font-size:1.25rem;color:var(--green-dark);margin:1.4em 0 .4em;}
+  p{margin:.6em 0;}
+  .warm-line{font-size:1.18rem;color:var(--ink-soft);margin-top:14px;}
+  .verse-line{font-family:Georgia,serif;font-style:italic;color:var(--brown);font-size:1.08rem;margin-top:18px;}
+
+  /* ---------- Buttons ---------- */
+  button{font-family:inherit;cursor:pointer;}
+  .big-btn{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    width:100%;min-height:72px;padding:16px 20px;margin:12px 0;
+    background:var(--card);border:2px solid var(--green);border-radius:var(--radius);
+    color:var(--ink);font-size:1.22rem;font-weight:600;text-align:left;
+  }
+  .big-btn:active{background:var(--green-soft);}
+  .big-btn .status{
+    flex:none;font-size:.92rem;font-weight:600;color:var(--green);
+    background:var(--green-soft);border-radius:999px;padding:6px 12px;white-space:nowrap;
+  }
+  .big-btn .status.empty{color:var(--ink-soft);background:#F1EADB;}
+  .big-btn.share-btn{background:var(--green);color:#fff;border-color:var(--green-dark);}
+  .big-btn.share-btn .status{background:rgba(255,255,255,.18);color:#fff;}
+  .big-btn.share-btn:active{background:var(--green-dark);}
+
+  .nav-row{display:flex;gap:12px;margin:0 0 18px;}
+  .nav-row.bottom{margin:26px 0 0;}
+  .nav-btn{
+    flex:1;min-height:60px;padding:12px 10px;border-radius:14px;
+    font-size:1.15rem;font-weight:700;border:2px solid var(--green);
+    background:var(--card);color:var(--green-dark);
+  }
+  .nav-btn.home-btn{background:var(--green);color:#fff;border-color:var(--green-dark);}
+  .nav-btn:active{filter:brightness(.95);}
+
+  .action-btn{
+    display:block;width:100%;min-height:64px;padding:14px 18px;margin:16px 0;
+    background:var(--green);color:#fff;border:2px solid var(--green-dark);
+    border-radius:var(--radius);font-size:1.18rem;font-weight:700;
+  }
+  .action-btn:active{background:var(--green-dark);}
+  .action-btn.secondary{background:var(--card);color:var(--green-dark);}
+  .remove-btn{
+    min-height:56px;padding:10px 18px;border-radius:12px;
+    background:#fff;border:2px solid var(--red);color:var(--red);
+    font-size:1.05rem;font-weight:700;
+  }
+
+  /* ---------- Tips switch ---------- */
+  .tips-bar{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    background:var(--card);border:2px solid var(--line);border-radius:var(--radius);
+    padding:12px 16px;margin:20px 0 6px;
+  }
+  .tips-bar span{font-weight:600;font-size:1.05rem;}
+  .tips-toggle{
+    min-height:56px;min-width:132px;padding:10px 18px;border-radius:999px;
+    border:2px solid var(--green);background:var(--green);color:#fff;
+    font-size:1.05rem;font-weight:700;
+  }
+  .tips-toggle.off{background:var(--card);color:var(--ink-soft);border-color:var(--line);}
+  .tip{
+    background:var(--amber);border:2px solid var(--amber-line);border-radius:14px;
+    padding:14px 16px;margin:16px 0;font-size:1.05rem;color:#5C4A1F;
+  }
+  body.tips-off .tip{display:none;}
+
+  /* ---------- Fields ---------- */
+  .field{margin:22px 0;}
+  .field label{display:block;font-weight:700;font-size:1.12rem;margin-bottom:8px;color:var(--ink);}
+  .field .hint{font-weight:400;font-size:.98rem;color:var(--ink-soft);display:block;margin-top:2px;}
+  .field-row{display:flex;gap:10px;align-items:flex-start;}
+  .field-row .grow{flex:1;min-width:0;}
+  input[type="text"],input[type="tel"],textarea{
+    width:100%;padding:14px;font-size:1.12rem;color:var(--ink);
+    background:#fff;border:2px solid #CBBFA6;border-radius:12px;font-family:inherit;
+  }
+  input[type="text"],input[type="tel"]{min-height:56px;}
+  textarea{min-height:110px;resize:vertical;line-height:1.5;}
+  input:focus,textarea:focus{outline:3px solid #B9D2B4;outline-offset:1px;border-color:var(--green);}
+  .talk-btn{
+    flex:none;min-height:56px;min-width:104px;padding:10px 14px;border-radius:12px;
+    background:var(--brown);color:#fff;border:2px solid #5F4527;
+    font-size:1.08rem;font-weight:700;white-space:nowrap;
+  }
+  .talk-btn.listening{background:var(--red);border-color:#7E2B20;}
+  .talk-note{display:none;color:var(--red);font-size:1rem;margin:8px 0 0;font-weight:600;}
+  .talk-note.show{display:block;}
+  .saved-note{font-size:.95rem;color:var(--green);margin-top:6px;min-height:1.2em;}
+
+  .plain-note{
+    background:var(--green-soft);border-radius:14px;padding:16px 18px;
+    font-size:1.1rem;font-weight:600;color:var(--green-dark);margin:18px 0;
+  }
+  .entry-card{
+    background:var(--card);border:2px solid var(--line);border-radius:var(--radius);
+    padding:6px 18px 18px;margin:18px 0;
+  }
+  .entry-card .field{margin:16px 0;}
+  .entry-head{font-family:Georgia,serif;font-weight:700;font-size:1.15rem;color:var(--brown);margin-top:14px;}
+
+  .screen{display:none;}
+  .screen.active{display:block;}
+  .screen-head{margin-bottom:6px;}
+  .screen-sub{color:var(--ink-soft);font-size:1.08rem;}
+
+  #planOutput{
+    width:100%;min-height:320px;background:#fff;border:2px solid #CBBFA6;border-radius:12px;
+    padding:16px;font-size:1.05rem;line-height:1.55;font-family:inherit;color:var(--ink);
+  }
+  .copy-ok{display:none;color:var(--green);font-weight:700;font-size:1.05rem;margin-top:8px;}
+  .copy-ok.show{display:block;}
+  footer{margin-top:34px;color:var(--ink-soft);font-size:.98rem;text-align:center;}
+
+  @media print{
+    .nav-row,.tips-bar,.talk-btn,.action-btn,.no-print{display:none !important;}
+    body{background:#fff;}
+    .screen{display:none !important;}
+    #screen-share{display:block !important;}
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <!-- ================= HOME ================= -->
+  <section class="screen active" id="screen-home">
+    <h1>When I'm Gone</h1>
+    <p class="warm-line">One of the kindest gifts you can leave your family is a plan. A little at a time, in your own words — everything they will need, all in one place.</p>
+    <p class="warm-line">There is no hurry. Fill in one part today, another next week. Everything you write is saved on this device as you go.</p>
+
+    <div class="tips-bar">
+      <span>Helpful tips</span>
+      <button type="button" class="tips-toggle" id="tipsToggle" aria-pressed="true">TIPS: ON</button>
+    </div>
+    <div class="tip">💡 Tip: Tap any part below to open it. The little label on each button tells you if you have started it. You can stop any time — your words are saved as you type.</div>
+
+    <nav aria-label="Parts of your plan">
+      <button type="button" class="big-btn" data-go="funeral">My Funeral Plan <span class="status" data-status="funeral"></span></button>
+      <button type="button" class="big-btn" data-go="will">My Will &amp; My Executor <span class="status" data-status="will"></span></button>
+      <button type="button" class="big-btn" data-go="where">Where Everything Is <span class="status" data-status="where"></span></button>
+      <button type="button" class="big-btn" data-go="call">Who to Call <span class="status" data-status="call"></span></button>
+      <button type="button" class="big-btn" data-go="gets">Who Gets What <span class="status" data-status="gets"></span></button>
+      <button type="button" class="big-btn" data-go="messages">Messages for My Family <span class="status" data-status="messages"></span></button>
+      <button type="button" class="big-btn" data-go="faith">My Faith <span class="status" data-status="faith"></span></button>
+      <button type="button" class="big-btn" data-go="cost">What Will It Cost? <span class="status" data-status="cost"></span></button>
+      <button type="button" class="big-btn share-btn" data-go="share">Share My Plan <span class="status">Put it together →</span></button>
+    </nav>
+
+    <p class="verse-line">“Let not your heart be troubled.” — John 14:1</p>
+    <footer>Everything you write stays on this device. No account, no sign-in — just your plan, kept here for your family.</footer>
+  </section>
+
+  <!-- ================= 1. FUNERAL PLAN ================= -->
+  <section class="screen" id="screen-funeral">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>My Funeral Plan</h2>
+    <p class="screen-sub">The service you would like, in your own words. Your family will be so glad you told them.</p></div>
+    <div class="tip">💡 Tip: You don't have to know every answer. Write what matters most to you, and leave the rest blank for now.</div>
+    <div id="funeralFields"></div>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= 2. WILL & EXECUTOR ================= -->
+  <section class="screen" id="screen-will">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>My Will &amp; My Executor</h2>
+    <p class="screen-sub">Where your will is, and who will look after things.</p></div>
+    <p class="plain-note">This app is not a will. It helps your family find yours.</p>
+    <div id="willFields"></div>
+    <button type="button" class="action-btn secondary" data-go="wills-info">About Wills in Canada →</button>
+    <div class="tip">💡 Tip: Your executor is the person who carries out your will. Pick someone you trust, and let them know you've picked them.</div>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ============ WILLS IN CANADA (info) ============ -->
+  <section class="screen" id="screen-wills-info">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>About Wills in Canada</h2>
+    <p class="screen-sub">Plain information to help you understand wills. This is general information only — it is not legal advice.</p></div>
+
+    <h3>What is a will?</h3>
+    <p>A will is a legal paper that says what you want done with your money, your home, and your belongings after you die. It also names the person who will look after your affairs. In Canada, wills are handled under the law of your province or territory.</p>
+
+    <h3>Why having one matters</h3>
+    <p>A will lets <em>you</em> decide who receives your things and who looks after your affairs. It makes a hard time easier for your family, because they are following your wishes instead of guessing. It can also name who would care for young children.</p>
+
+    <h3>What an executor does</h3>
+    <p>Your executor is the person your will names to carry out your wishes. Their job includes gathering your papers, paying any final bills and taxes, looking after your property, and passing your belongings on the way your will says. It is a job of trust, so most people choose someone organized who knows the family.</p>
+
+    <h3>What happens if there is no will</h3>
+    <p>If a person dies without a will, the law of their province or territory decides who gets their property and who looks after their affairs. Those rules may not match what the person would have wanted, and sorting it out can take longer and cost more for the family.</p>
+
+    <h3>Where people usually keep one</h3>
+    <p>People often keep their will at home in a safe place their executor knows about, with their lawyer, or in a safety deposit box. Wherever yours is, the important thing is that your executor knows where to find it.</p>
+
+    <p class="plain-note">If you don't have a will yet, a lawyer or notary in your province can help you make one. This page is information only — it is not legal advice, and this app does not make a will.</p>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= 3. WHERE EVERYTHING IS ================= -->
+  <section class="screen" id="screen-where">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>Where Everything Is</h2>
+    <p class="screen-sub">Where your important papers and things live, so your family can find them.</p></div>
+    <p class="plain-note">Don't write passwords or PINs in here — just where things are and who to ask.</p>
+    <div id="whereFields"></div>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= 4. WHO TO CALL ================= -->
+  <section class="screen" id="screen-call">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>Who to Call</h2>
+    <p class="screen-sub">The people your family should phone — family, your pastor, your lawyer, the funeral home, your work.</p></div>
+    <div class="tip">💡 Tip: Start with the two or three most important people. You can add more any time with the Add button.</div>
+    <div id="callList"></div>
+    <button type="button" class="action-btn" id="addCall">＋ Add a Person</button>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= 5. WHO GETS WHAT ================= -->
+  <section class="screen" id="screen-gets">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>Who Gets What</h2>
+    <p class="screen-sub">Your wishes for your belongings and keepsakes, one item at a time.</p></div>
+    <p class="plain-note">These are your wishes for your family. Your will is what speaks legally — this helps them know what you wanted.</p>
+    <div id="getsList"></div>
+    <button type="button" class="action-btn" id="addGets">＋ Add an Item</button>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= 6. MESSAGES ================= -->
+  <section class="screen" id="screen-messages">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>Messages for My Family</h2>
+    <p class="screen-sub">Letters and last words for the people you love, in your own words.</p></div>
+    <div class="tip">💡 Tip: Tap the Talk button and just say it out loud, the way you'd say it across the kitchen table. You can fix any words by typing afterwards.</div>
+    <div id="msgList"></div>
+    <button type="button" class="action-btn" id="addMsg">＋ Add a Message</button>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= 7. MY FAITH ================= -->
+  <section class="screen" id="screen-faith">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>My Faith</h2>
+    <p class="screen-sub">Only if you want to. Many people find comfort in leaving their family the faith that carried them.</p></div>
+    <div id="faithFields"></div>
+    <p class="verse-line">Verses many families love at a service: Psalm 23 · Psalm 34:18 · John 14:1–3 · Isaiah 41:10 · 2 Corinthians 1:3–4 · Revelation 21:4</p>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= 8. WHAT WILL IT COST? ================= -->
+  <section class="screen" id="screen-cost">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>What Will It Cost?</h2></div>
+    <p style="font-size:1.15rem;">Save on Dying is our companion app. It compares funeral costs town by town — funeral homes, cemeteries, and crematoriums near you — so your family can see real prices before they decide.</p>
+    <p style="font-size:1.15rem;">Save on Dying is coming to the App Store.</p>
+    <p class="screen-sub">Your plan here says what you want. Save on Dying will help your family see what it costs — the two go hand in hand.</p>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= 9. SHARE MY PLAN ================= -->
+  <section class="screen" id="screen-share">
+    <div class="nav-row no-print"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>Share My Plan</h2>
+    <p class="screen-sub">Here is everything you have filled in, gathered into one clean plan — only the parts you wrote, in your own words.</p></div>
+    <p class="plain-note">One important thing: tell your executor or your family that this plan exists, and where they can find it. An organizer nobody can find helps nobody — telling them is part of the gift.</p>
+    <textarea id="planOutput" readonly aria-label="Your whole plan as plain text"></textarea>
+    <button type="button" class="action-btn no-print" id="copyPlan">Copy My Plan</button>
+    <p class="copy-ok" id="copyOk">Copied! You can now paste it into a message, an email, or a document to send to your executor or family.</p>
+    <div class="tip">💡 Tip: Many people paste their plan into an email to their executor, and keep a printed copy with their will.</div>
+    <div class="nav-row bottom no-print"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+</main>
+<script>
+(function(){
+"use strict";
+
+/* ================= Storage ================= */
+var STORE_KEY = "whenImGone.v1";
+var store = { funeral:{}, will:{}, where:{}, faith:{}, call:[], gets:[], messages:[], tipsOn:true };
+try {
+  var raw = localStorage.getItem(STORE_KEY);
+  if (raw) {
+    var parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object") {
+      for (var k in store) { if (parsed[k] !== undefined) store[k] = parsed[k]; }
+    }
+  }
+} catch(e) {}
+function save() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch(e) {}
+}
+
+/* ================= Field definitions ================= */
+var SECTIONS = {
+  funeral: { title:"MY FUNERAL PLAN", fields:[
+    {key:"place",  label:"Church or place for the service", type:"text"},
+    {key:"leader", label:"Who should lead the service", type:"text"},
+    {key:"songs",  label:"Songs and hymns I would like", type:"area"},
+    {key:"readings", label:"Readings and verses I would like", type:"area"},
+    {key:"burial", label:"Burial or cremation — my wish", hint:"In your own words, just as you would tell your family.", type:"area"},
+    {key:"cemetery", label:"Cemetery — where", type:"text"},
+    {key:"funeralHome", label:"Funeral home, if I have chosen one", type:"text"},
+    {key:"prepaid", label:"Pre-paid arrangements, and where that paperwork is kept", type:"area"}
+  ]},
+  will: { title:"MY WILL & MY EXECUTOR", fields:[
+    {key:"willWhere", label:"Where my will is kept", type:"text"},
+    {key:"executorName", label:"My executor's name", type:"text"},
+    {key:"executorPhone", label:"My executor's phone number", type:"tel"},
+    {key:"lawyerName", label:"My lawyer's name", type:"text"},
+    {key:"lawyerPhone", label:"My lawyer's phone number", type:"tel"}
+  ]},
+  where: { title:"WHERE EVERYTHING IS", fields:[
+    {key:"insurance", label:"Insurance policies", hint:"Which companies, and where the papers are.", type:"area"},
+    {key:"property", label:"Property and house papers", type:"area"},
+    {key:"banks", label:"Bank accounts", hint:"Which banks — names and places only, no account numbers needed.", type:"area"},
+    {key:"pensions", label:"Pensions and benefits", type:"area"},
+    {key:"vehicles", label:"Vehicles", hint:"What they are, and where the papers are.", type:"area"},
+    {key:"anythingElse", label:"Anything else my family should know where to find", type:"area"}
+  ]},
+  faith: { title:"MY FAITH", fields:[
+    {key:"testimony", label:"My testimony — the faith that carried me", hint:"In your own words. Say as much or as little as you like.", type:"area"},
+    {key:"verse", label:"A verse I want read", type:"area"}
+  ]}
+};
+
+/* ================= Talk-to-fill (one shared session) ================= */
+var SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+var recog = null, talkField = null, talkBtn = null, talkNote = null, talkBase = "", userStopped = false, talkFailed = false;
+
+function talkNoteShow(note){ if (note) note.classList.add("show"); }
+function endTalkUI(){
+  if (talkBtn) { talkBtn.textContent = "🎤 Talk"; talkBtn.classList.remove("listening"); }
+  talkField = null; talkBtn = null; talkNote = null;
+}
+function stopTalk(){
+  userStopped = true;
+  if (recog) { try { recog.stop(); } catch(e) {} }
+  endTalkUI();
+}
+function startTalk(field, btn, note){
+  if (!SR) { talkNoteShow(note); return; }
+  if (talkField === field) { stopTalk(); return; }
+  if (talkField) { stopTalk(); }
+  userStopped = false; talkFailed = false;
+  talkField = field; talkBtn = btn; talkNote = note;
+  talkBase = field.value ? field.value.replace(/\s+$/,"") : "";
+  if (talkBase) talkBase += " ";
+  if (!recog) {
+    recog = new SR();
+    recog.lang = "en-CA";
+    recog.continuous = true;
+    recog.interimResults = true;
+    recog.onresult = function(ev){
+      if (!talkField) return;
+      var text = "";
+      for (var i = 0; i < ev.results.length; i++) { text += ev.results[i][0].transcript; }
+      talkField.value = talkBase + text;
+      talkField.dispatchEvent(new Event("input", { bubbles:true }));
+    };
+    recog.onerror = function(ev){
+      if (ev.error === "not-allowed" || ev.error === "service-not-allowed" || ev.error === "audio-capture" || ev.error === "network") {
+        talkFailed = true;
+        talkNoteShow(talkNote);
+        stopTalk();
+      }
+    };
+    recog.onend = function(){
+      if (talkField && !userStopped && !talkFailed) {
+        try { recog.start(); } catch(e) {}
+      }
+    };
+  }
+  btn.textContent = "⏹ Stop";
+  btn.classList.add("listening");
+  try { recog.start(); }
+  catch(e) { talkNoteShow(note); endTalkUI(); }
+}
+
+/* Build one labelled field with a Talk button. get/set wire it to storage. */
+function makeField(label, hint, type, getVal, setVal){
+  var wrap = document.createElement("div");
+  wrap.className = "field";
+  var id = "f" + Math.random().toString(36).slice(2,9);
+  var lab = document.createElement("label");
+  lab.setAttribute("for", id);
+  lab.textContent = label;
+  if (hint) {
+    var h = document.createElement("span");
+    h.className = "hint"; h.textContent = hint;
+    lab.appendChild(h);
+  }
+  wrap.appendChild(lab);
+  var row = document.createElement("div");
+  row.className = "field-row";
+  var grow = document.createElement("div");
+  grow.className = "grow";
+  var input;
+  if (type === "area") { input = document.createElement("textarea"); }
+  else { input = document.createElement("input"); input.type = type || "text"; }
+  input.id = id;
+  input.value = getVal() || "";
+  input.setAttribute("autocomplete","off");
+  input.setAttribute("aria-label", label);
+  grow.appendChild(input);
+  row.appendChild(grow);
+  var btn = document.createElement("button");
+  btn.type = "button"; btn.className = "talk-btn"; btn.textContent = "🎤 Talk";
+  row.appendChild(btn);
+  wrap.appendChild(row);
+  var note = document.createElement("p");
+  note.className = "talk-note";
+  note.textContent = "Talking isn't available here — typing works just fine.";
+  wrap.appendChild(note);
+  input.addEventListener("input", function(){ setVal(input.value); save(); refreshStatuses(); });
+  btn.addEventListener("click", function(){ startTalk(input, btn, note); });
+  return wrap;
+}
+
+/* ================= Static sections ================= */
+function buildStatic(secKey, mountId){
+  var mount = document.getElementById(mountId);
+  SECTIONS[secKey].fields.forEach(function(f){
+    mount.appendChild(makeField(f.label, f.hint, f.type,
+      function(){ return store[secKey][f.key]; },
+      function(v){ store[secKey][f.key] = v; }
+    ));
+  });
+}
+buildStatic("funeral","funeralFields");
+buildStatic("will","willFields");
+buildStatic("where","whereFields");
+buildStatic("faith","faithFields");
+
+/* ================= Dynamic lists ================= */
+function entryCard(titleText){
+  var card = document.createElement("div");
+  card.className = "entry-card";
+  var head = document.createElement("div");
+  head.className = "entry-head"; head.textContent = titleText;
+  card.appendChild(head);
+  return card;
+}
+function removeBtn(onRemove){
+  var b = document.createElement("button");
+  b.type = "button"; b.className = "remove-btn"; b.textContent = "Remove";
+  b.addEventListener("click", onRemove);
+  return b;
+}
+
+function renderCall(){
+  var mount = document.getElementById("callList");
+  mount.innerHTML = "";
+  store.call.forEach(function(entry, idx){
+    var card = entryCard("Person " + (idx+1));
+    card.appendChild(makeField("Name", null, "text",
+      function(){ return entry.name; }, function(v){ entry.name = v; }));
+    card.appendChild(makeField("Who they are", "Family, pastor, lawyer, funeral home, work…", "text",
+      function(){ return entry.who; }, function(v){ entry.who = v; }));
+    card.appendChild(makeField("Phone number", null, "tel",
+      function(){ return entry.phone; }, function(v){ entry.phone = v; }));
+    card.appendChild(removeBtn(function(){
+      store.call.splice(idx,1); save(); renderCall(); refreshStatuses();
+    }));
+    mount.appendChild(card);
+  });
+}
+function renderGets(){
+  var mount = document.getElementById("getsList");
+  mount.innerHTML = "";
+  store.gets.forEach(function(entry, idx){
+    var card = entryCard("Item " + (idx+1));
+    card.appendChild(makeField("The item", null, "text",
+      function(){ return entry.item; }, function(v){ entry.item = v; }));
+    card.appendChild(makeField("Who I would like to have it", null, "text",
+      function(){ return entry.who; }, function(v){ entry.who = v; }));
+    card.appendChild(makeField("Notes", null, "area",
+      function(){ return entry.notes; }, function(v){ entry.notes = v; }));
+    card.appendChild(removeBtn(function(){
+      store.gets.splice(idx,1); save(); renderGets(); refreshStatuses();
+    }));
+    mount.appendChild(card);
+  });
+}
+function renderMessages(){
+  var mount = document.getElementById("msgList");
+  mount.innerHTML = "";
+  store.messages.forEach(function(entry, idx){
+    var card = entryCard("Message " + (idx+1));
+    card.appendChild(makeField("Who this message is for", null, "text",
+      function(){ return entry.to; }, function(v){ entry.to = v; }));
+    card.appendChild(makeField("My message", null, "area",
+      function(){ return entry.body; }, function(v){ entry.body = v; }));
+    card.appendChild(removeBtn(function(){
+      store.messages.splice(idx,1); save(); renderMessages(); refreshStatuses();
+    }));
+    mount.appendChild(card);
+  });
+}
+renderCall(); renderGets(); renderMessages();
+
+document.getElementById("addCall").addEventListener("click", function(){
+  store.call.push({name:"",who:"",phone:""}); save(); renderCall(); refreshStatuses();
+});
+document.getElementById("addGets").addEventListener("click", function(){
+  store.gets.push({item:"",who:"",notes:""}); save(); renderGets(); refreshStatuses();
+});
+document.getElementById("addMsg").addEventListener("click", function(){
+  store.messages.push({to:"",body:""}); save(); renderMessages(); refreshStatuses();
+});
+
+/* ================= Started-or-not labels on Home ================= */
+function anyFilled(obj){
+  for (var k in obj) { if (typeof obj[k] === "string" && obj[k].trim()) return true; }
+  return false;
+}
+function listFilled(list, keys){
+  return list.some(function(e){ return keys.some(function(k){ return e[k] && e[k].trim(); }); });
+}
+function refreshStatuses(){
+  var map = {
+    funeral: anyFilled(store.funeral),
+    will: anyFilled(store.will),
+    where: anyFilled(store.where),
+    faith: anyFilled(store.faith),
+    call: listFilled(store.call, ["name","who","phone"]),
+    gets: listFilled(store.gets, ["item","who","notes"]),
+    messages: listFilled(store.messages, ["to","body"]),
+    cost: true
+  };
+  Object.keys(map).forEach(function(key){
+    var el = document.querySelector('[data-status="' + key + '"]');
+    if (!el) return;
+    if (key === "cost") { el.textContent = "About our companion app"; el.classList.remove("empty"); return; }
+    el.textContent = map[key] ? "Started ✓" : "Not started";
+    el.classList.toggle("empty", !map[key]);
+  });
+}
+refreshStatuses();
+
+/* ================= Tips switch ================= */
+var tipsToggle = document.getElementById("tipsToggle");
+function applyTips(){
+  document.body.classList.toggle("tips-off", !store.tipsOn);
+  tipsToggle.textContent = store.tipsOn ? "TIPS: ON" : "TIPS: OFF";
+  tipsToggle.classList.toggle("off", !store.tipsOn);
+  tipsToggle.setAttribute("aria-pressed", store.tipsOn ? "true" : "false");
+}
+tipsToggle.addEventListener("click", function(){
+  store.tipsOn = !store.tipsOn; save(); applyTips();
+});
+applyTips();
+
+/* ================= Navigation ================= */
+var navStack = [];
+var current = "home";
+function show(id){
+  document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
+  document.getElementById("screen-" + id).classList.add("active");
+  current = id;
+  window.scrollTo(0,0);
+  if (id === "share") buildPlan();
+  if (id === "home") refreshStatuses();
+}
+function go(id){
+  if (id === current) return;
+  navStack.push(current);
+  show(id);
+}
+function back(){
+  stopTalk();
+  var prev = navStack.pop();
+  show(prev || "home");
+}
+function home(){
+  stopTalk();
+  navStack = [];
+  show("home");
+}
+document.querySelectorAll("[data-go]").forEach(function(b){
+  b.addEventListener("click", function(){ go(b.getAttribute("data-go")); });
+});
+document.querySelectorAll(".btn-back").forEach(function(b){ b.addEventListener("click", back); });
+document.querySelectorAll(".btn-home").forEach(function(b){ b.addEventListener("click", home); });
+
+/* ================= Share My Plan ================= */
+function buildPlan(){
+  var lines = [];
+  lines.push("WHEN I'M GONE — MY PLAN");
+  lines.push("Made with love, in my own words.");
+  lines.push("");
+  ["funeral","will","where","faith"].forEach(function(secKey){
+    var sec = SECTIONS[secKey];
+    var filled = sec.fields.filter(function(f){ return store[secKey][f.key] && store[secKey][f.key].trim(); });
+    if (!filled.length) return;
+    lines.push("================================");
+    lines.push(sec.title);
+    lines.push("================================");
+    filled.forEach(function(f){
+      lines.push(f.label + ":");
+      lines.push(store[secKey][f.key].trim());
+      lines.push("");
+    });
+  });
+  if (sec2Filled(store.call)) {
+    lines.push("================================");
+    lines.push("WHO TO CALL");
+    lines.push("================================");
+    store.call.forEach(function(e){
+      if (!anyEntry(e)) return;
+      var parts = [];
+      if (e.name && e.name.trim()) parts.push(e.name.trim());
+      if (e.who && e.who.trim()) parts.push("(" + e.who.trim() + ")");
+      if (e.phone && e.phone.trim()) parts.push("— " + e.phone.trim());
+      lines.push(parts.join(" "));
+    });
+    lines.push("");
+  }
+  if (sec2Filled(store.gets)) {
+    lines.push("================================");
+    lines.push("WHO GETS WHAT");
+    lines.push("================================");
+    store.gets.forEach(function(e){
+      if (!anyEntry(e)) return;
+      var head = e.item && e.item.trim() ? e.item.trim() : "Item";
+      var line = head;
+      if (e.who && e.who.trim()) line += " — for " + e.who.trim();
+      lines.push(line);
+      if (e.notes && e.notes.trim()) lines.push("   " + e.notes.trim());
+    });
+    lines.push("");
+  }
+  if (sec2Filled(store.messages)) {
+    lines.push("================================");
+    lines.push("MESSAGES FOR MY FAMILY");
+    lines.push("================================");
+    store.messages.forEach(function(e){
+      if (!anyEntry(e)) return;
+      if (e.to && e.to.trim()) lines.push("For: " + e.to.trim());
+      if (e.body && e.body.trim()) lines.push(e.body.trim());
+      lines.push("");
+    });
+  }
+  var out = document.getElementById("planOutput");
+  if (lines.length <= 3) {
+    out.value = "Nothing here yet — once you fill in any part of your plan, it will all gather here, ready to copy and share.";
+  } else {
+    out.value = lines.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  }
+  document.getElementById("copyOk").classList.remove("show");
+}
+function anyEntry(e){ for (var k in e) { if (typeof e[k] === "string" && e[k].trim()) return true; } return false; }
+function sec2Filled(list){ return list.some(anyEntry); }
+
+document.getElementById("copyPlan").addEventListener("click", function(){
+  var out = document.getElementById("planOutput");
+  function done(){ document.getElementById("copyOk").classList.add("show"); }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(out.value).then(done, function(){
+      out.select(); try { document.execCommand("copy"); } catch(e) {} done();
+    });
+  } else {
+    out.select(); try { document.execCommand("copy"); } catch(e) {} done();
+  }
+});
+})();
+</script>
+</body>
+</html>
