@@ -95,3 +95,41 @@
   packaging, the GitHub repo itself still has to be created (one
   browser step — no API token on this machine); the local commit is
   ready and the push is a single command once the empty repo exists.
+
+## Build 1.0 (2) — Nov 21, 2026 ("make it shine")
+
+- Carson's direction (Nov 21, 2026): "don't let me wreck. You know
+  what it needs. Make it shine do it the way you want. The only thing
+  I would add is a way to make videos for your funeral or for your
+  family that you can update it any time." Implements
+  ~/workspace/when-im-gone/BUILD-2-SPEC.md in full; the spec's video
+  item is superseded by Carson's fuller Nov 21 version (see spec's
+  SHIPPED section).
+- VIDEO MECHANISM (the honest engineering): record/pick runs through
+  the phone's own camera and library screens (file input with
+  capture) — the route that genuinely works in the Capacitor
+  WKWebView shell. In-webview getUserMedia/MediaRecorder recording
+  was NOT used: unreliable in WKWebView. Files are kept in IndexedDB
+  ("whenImGoneMedia"); the text store carries only id/kind/name/
+  has/when per video. SEND TO FAMILY uses the Web Share sheet with
+  the file where the webview supports file sharing, and falls back
+  to a save-a-copy download where it does not. Replace overwrites
+  the same IndexedDB record — newest wins, no version clutter.
+  Info.plist gained NSCameraUsageDescription +
+  NSPhotoLibraryUsageDescription (camera/mic permission asked inside
+  the app at first use — the house MIC PERMISSION RULE extended to
+  camera); Android gained CAMERA.
+- PHONE-ONLY PROOFS (stated plainly): the camera screen itself, the
+  iOS permission prompts, real share-sheet delivery of a video file,
+  and IndexedDB persistence across app restarts are proven only on
+  Carson's phone in TestFlight — same standing caveat as live
+  dictation in build 1. The harness (tools/harness.js, 87/87)
+  exercises every flow with a shimmed IndexedDB.
+- WILL WORDING: the new "What Makes a Will Legal in Alberta" screen
+  joins the PRE-SALE GATE list — Steve Fix reviews it with the Will
+  screen, About Wills in Canada page, and Who Gets What line before
+  any sale. The gate does not block TestFlight.
+- SAVE ON DYING BUTTON on the funeral-ideas page goes to the in-app
+  Save on Dying page — deliberately NOT a store link (not live yet).
+- www and the ts-spaces web twin remain byte-identical.
+- Codemagic build NOT started by the builder — the parent starts it.

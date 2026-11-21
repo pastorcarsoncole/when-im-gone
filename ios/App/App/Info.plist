@@ -66,6 +66,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>When I'm Gone needs the camera so you can record video messages for your family and photograph the pages of your signed will, right inside the app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>When I'm Gone lets you pick a video or a photo you already have — for a video message, or a page of your signed will — from your photo library.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>When I'm Gone needs the microphone so you can talk instead of typing when you fill in your plan and your messages for your family.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>

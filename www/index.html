@@ -137,6 +137,27 @@
   .screen-head{margin-bottom:6px;}
   .screen-sub{color:var(--ink-soft);font-size:1.08rem;}
 
+  /* ---------- Media (videos & will photos) ---------- */
+  .media-video{width:100%;display:block;border-radius:12px;background:#000;margin:10px 0;}
+  .media-when{font-size:.98rem;color:var(--ink-soft);margin:6px 0 0;}
+  .media-none{font-size:1.08rem;color:var(--ink-soft);margin:10px 0;}
+  .media-btns{display:flex;flex-direction:column;gap:0;}
+  .media-btns .action-btn{margin:8px 0;}
+  .will-page{margin:18px 0;}
+  .will-page img{
+    width:100%;max-height:220px;object-fit:cover;display:block;
+    border:2px solid var(--line);border-radius:12px;cursor:pointer;background:#fff;
+  }
+  .will-page img.full{max-height:none;object-fit:contain;}
+  .will-page .remove-btn{margin-top:10px;}
+  .idea-group{margin:20px 0;}
+  .idea-group h3{margin:.2em 0 .3em;}
+  .idea-list{list-style:none;margin:0;padding:0;}
+  .idea-list li{
+    background:var(--card);border:2px solid var(--line);border-radius:12px;
+    padding:13px 16px;margin:8px 0;font-size:1.12rem;font-weight:600;
+  }
+
   #planOutput{
     width:100%;min-height:320px;background:#fff;border:2px solid #CBBFA6;border-radius:12px;
     padding:16px;font-size:1.05rem;line-height:1.55;font-family:inherit;color:var(--ink);
@@ -201,6 +222,8 @@
     <p class="screen-sub">Where your will is, and who will look after things.</p></div>
     <p class="plain-note">This app is not a will. It helps your family find yours.</p>
     <div id="willFields"></div>
+    <button type="button" class="action-btn secondary" data-go="willphotos">📷 Photos of My Signed Will →</button>
+    <button type="button" class="action-btn secondary" data-go="alberta">What Makes a Will Legal in Alberta →</button>
     <button type="button" class="action-btn secondary" data-go="wills-info">About Wills in Canada →</button>
     <div class="tip">💡 Tip: Your executor is the person who carries out your will. Pick someone you trust, and let them know you've picked them.</div>
     <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
@@ -268,6 +291,7 @@
     <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
     <div class="screen-head"><h2>Messages for My Family</h2>
     <p class="screen-sub">Letters and last words for the people you love, in your own words.</p></div>
+    <button type="button" class="big-btn" data-go="videos">🎥 Video Messages <span class="status" data-status="videos"></span></button>
     <div class="tip">💡 Tip: Tap the Talk button and just say it out loud, the way you'd say it across the kitchen table. You can fix any words by typing afterwards.</div>
     <div id="msgList"></div>
     <button type="button" class="action-btn" id="addMsg">＋ Add a Message</button>
@@ -291,6 +315,87 @@
     <p style="font-size:1.15rem;">Save on Dying is our companion app. It compares funeral costs town by town — funeral homes, cemeteries, and crematoriums near you — so your family can see real prices before they decide.</p>
     <p style="font-size:1.15rem;">Save on Dying is coming to the App Store.</p>
     <p class="screen-sub">Your plan here says what you want. Save on Dying will help your family see what it costs — the two go hand in hand.</p>
+    <button type="button" class="action-btn secondary" data-go="ideas">Ways to Say Goodbye →</button>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= VIDEO MESSAGES ================= -->
+  <section class="screen" id="screen-videos">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>Video Messages</h2>
+    <p class="screen-sub">Your face and your voice, for the people you love. Record one for your funeral, and one for anyone you like — and change any of them any time.</p></div>
+    <p class="plain-note">A video that only lives on this phone can be lost with the phone. Send a copy to your family — every video here has a Send button.</p>
+    <h3>For My Funeral</h3>
+    <div id="funeralVideo"></div>
+    <h3>For My Family</h3>
+    <div id="familyVideos"></div>
+    <button type="button" class="action-btn" id="addVideo">＋ Add a Video for Someone</button>
+    <div class="tip">💡 Tip: Short and from the heart is perfect. You can re-record any time — the newest one is the one that's kept.</div>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= WILL PHOTOS ================= -->
+  <section class="screen" id="screen-willphotos">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>Photos of My Signed Will</h2>
+    <p class="screen-sub">Photograph your signed paper will, one page at a time, and keep the pictures here — so your family can see it, and know the real one exists.</p></div>
+    <p class="plain-note">The paper original is still your will. These photos are a copy to help your family — keep the original where you said it is, on the screen before this one.</p>
+    <div id="willPages"></div>
+    <button type="button" class="action-btn" id="photoWillPage">📷 Photograph a Page</button>
+    <button type="button" class="action-btn secondary" id="pickWillPage">📁 Pick a Photo</button>
+    <div class="tip">💡 Tip: Lay each page flat in good light, and fill the picture with the page. Tap a photo to see it big.</div>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ============ WHAT MAKES A WILL LEGAL IN ALBERTA ============ -->
+  <section class="screen" id="screen-alberta">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>What Makes a Will Legal in Alberta</h2>
+    <p class="screen-sub">The short version, in plain words.</p></div>
+
+    <h3>Signed, with two witnesses</h3>
+    <p>A will in Alberta must be in writing, and signed by the person making it. Two witnesses watch that person sign, and then sign it themselves, all together in the same room.</p>
+
+    <h3>Witnesses shouldn't inherit</h3>
+    <p>Your witnesses should not be people who receive anything in your will, and neither should their husbands or wives — a gift left to a witness can be undone.</p>
+
+    <h3>A handwritten will is its own case</h3>
+    <p>A will written entirely in your own handwriting, and signed by you, can be legal in Alberta even with no witnesses at all. It is still safer to have a lawyer look it over — one unclear line can cause your family real trouble.</p>
+
+    <h3>You must be 18 or older</h3>
+    <p>In Alberta you generally have to be 18 to make a will. And if your life changes — marriage, a new child, a divorce — your will should be looked at again.</p>
+
+    <p class="plain-note">This app does not make wills — a lawyer or a proper will service does. This page is plain information only, not legal advice.</p>
+    <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+  </section>
+
+  <!-- ================= WAYS TO SAY GOODBYE (funeral ideas) ================= -->
+  <section class="screen" id="screen-ideas">
+    <div class="nav-row"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
+    <div class="screen-head"><h2>Ways to Say Goodbye</h2>
+    <p class="screen-sub">A quick look at how people do it — to help you picture your own.</p></div>
+
+    <div class="idea-group">
+      <h3>Traditional</h3>
+      <ul class="idea-list">
+        <li>Church service</li>
+        <li>Casket</li>
+        <li>Burial plot</li>
+        <li>Tombstone</li>
+        <li>Embalming</li>
+      </ul>
+    </div>
+    <div class="idea-group">
+      <h3>Your way</h3>
+      <ul class="idea-list">
+        <li>Cremation</li>
+        <li>Backyard barbecue</li>
+        <li>Get-together in a park</li>
+        <li>Celebration in a bar</li>
+      </ul>
+    </div>
+
+    <button type="button" class="big-btn share-btn" data-go="cost">See what it costs and find places near you — Save on Dying <span class="status">→</span></button>
     <div class="nav-row bottom"><button type="button" class="nav-btn btn-back">← Back</button><button type="button" class="nav-btn home-btn btn-home">⌂ Home</button></div>
   </section>
 
@@ -314,7 +419,7 @@
 
 /* ================= Storage ================= */
 var STORE_KEY = "whenImGone.v1";
-var store = { funeral:{}, will:{}, where:{}, faith:{}, call:[], gets:[], messages:[], tipsOn:true };
+var store = { funeral:{}, will:{}, where:{}, faith:{}, call:[], gets:[], messages:[], videos:[], willPages:[], tipsOn:true };
 try {
   var raw = localStorage.getItem(STORE_KEY);
   if (raw) {
@@ -557,12 +662,13 @@ function listFilled(list, keys){
 function refreshStatuses(){
   var map = {
     funeral: anyFilled(store.funeral),
-    will: anyFilled(store.will),
+    will: anyFilled(store.will) || store.willPages.length > 0,
     where: anyFilled(store.where),
     faith: anyFilled(store.faith),
     call: listFilled(store.call, ["name","who","phone"]),
     gets: listFilled(store.gets, ["item","who","notes"]),
     messages: listFilled(store.messages, ["to","body"]),
+    videos: store.videos.some(function(v){ return v.has; }),
     cost: true
   };
   Object.keys(map).forEach(function(key){
@@ -597,6 +703,8 @@ function show(id){
   current = id;
   window.scrollTo(0,0);
   if (id === "share") buildPlan();
+  if (id === "videos") renderVideos();
+  if (id === "willphotos") renderWillPages();
   if (id === "home") refreshStatuses();
 }
 function go(id){
@@ -620,6 +728,315 @@ document.querySelectorAll("[data-go]").forEach(function(b){
 document.querySelectorAll(".btn-back").forEach(function(b){ b.addEventListener("click", back); });
 document.querySelectorAll(".btn-home").forEach(function(b){ b.addEventListener("click", home); });
 
+/* ================= Media: videos & will photos =================
+   The video and photo files themselves live in IndexedDB — localStorage
+   could never hold a video. Only small notes about them live in the
+   regular store. Recording and picking go through the phone's own
+   camera and library screens, which is the mechanism that genuinely
+   works inside this app's shell: the phone asks for camera permission
+   itself, inside the app, the first time — nobody is sent to Settings. */
+var IDB_NAME = "whenImGoneMedia", idbDb = null, idbFailed = false;
+function idbOpen(cb){
+  if (idbDb) { cb(idbDb); return; }
+  if (idbFailed || !window.indexedDB) { idbFailed = true; cb(null); return; }
+  var req;
+  try { req = window.indexedDB.open(IDB_NAME, 1); } catch(e) { idbFailed = true; cb(null); return; }
+  req.onupgradeneeded = function(){
+    try { req.result.createObjectStore("media", { keyPath:"id" }); } catch(e) {}
+  };
+  req.onsuccess = function(){ idbDb = req.result; cb(idbDb); };
+  req.onerror = function(){ idbFailed = true; cb(null); };
+}
+function idbPut(id, blob, cb){
+  idbOpen(function(db){
+    if (!db) { if (cb) cb(false); return; }
+    try {
+      var r = db.transaction("media", "readwrite").objectStore("media").put({ id:id, blob:blob });
+      r.onsuccess = function(){ if (cb) cb(true); };
+      r.onerror = function(){ if (cb) cb(false); };
+    } catch(e) { if (cb) cb(false); }
+  });
+}
+function idbGet(id, cb){
+  idbOpen(function(db){
+    if (!db) { cb(null); return; }
+    try {
+      var r = db.transaction("media", "readonly").objectStore("media").get(id);
+      r.onsuccess = function(){ cb(r.result ? r.result.blob : null); };
+      r.onerror = function(){ cb(null); };
+    } catch(e) { cb(null); }
+  });
+}
+function idbDel(id, cb){
+  idbOpen(function(db){
+    if (!db) { if (cb) cb(); return; }
+    try {
+      var r = db.transaction("media", "readwrite").objectStore("media").delete(id);
+      r.onsuccess = function(){ if (cb) cb(); };
+      r.onerror = function(){ if (cb) cb(); };
+    } catch(e) { if (cb) cb(); }
+  });
+}
+
+var liveUrls = [];
+function objUrl(blob){
+  try { var u = URL.createObjectURL(blob); liveUrls.push(u); return u; }
+  catch(e) { return ""; }
+}
+function revokeUrls(){
+  liveUrls.forEach(function(u){ try { URL.revokeObjectURL(u); } catch(e) {} });
+  liveUrls = [];
+}
+
+/* One picker for camera + library. capture "camcorder"/"environment"
+   opens the camera; no capture opens the library. */
+function pickMedia(accept, capture, cb){
+  document.querySelectorAll("input.media-pick").forEach(function(n){ n.remove(); });
+  var inp = document.createElement("input");
+  inp.type = "file"; inp.accept = accept; inp.className = "media-pick";
+  inp.style.display = "none";
+  if (capture) inp.setAttribute("capture", capture);
+  inp.addEventListener("change", function(){
+    var f = inp.files && inp.files[0];
+    inp.remove();
+    if (f) cb(f);
+  });
+  document.body.appendChild(inp);
+  inp.click();
+}
+
+function newId(prefix){ return prefix + "-" + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function todayLine(){
+  try { return new Date().toLocaleDateString("en-CA", { year:"numeric", month:"long", day:"numeric" }); }
+  catch(e) { return ""; }
+}
+function fileNameFor(title, blob){
+  var t = (blob && blob.type) || "", ext = ".mp4";
+  if (t.indexOf("quicktime") >= 0) ext = ".mov";
+  else if (t.indexOf("webm") >= 0) ext = ".webm";
+  else if (t.indexOf("image/png") >= 0) ext = ".png";
+  else if (t.indexOf("image/") >= 0) ext = ".jpg";
+  return (title || "video").replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "-") + ext;
+}
+function shareMedia(id, title){
+  idbGet(id, function(blob){
+    if (!blob) return;
+    var name = fileNameFor(title, blob);
+    try {
+      var file = new File([blob], name, { type: blob.type || "video/mp4" });
+      if (navigator.canShare && navigator.canShare({ files:[file] })) {
+        navigator.share({ files:[file], title:title }).catch(function(){});
+        return;
+      }
+    } catch(e) {}
+    /* Fallback: hand over a copy the family can save. */
+    try {
+      var a = document.createElement("a");
+      a.href = objUrl(blob);
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch(e) {}
+  });
+}
+
+/* ---------- Videos ---------- */
+function funeralMeta(){
+  var m = null;
+  store.videos.forEach(function(v){ if (v.kind === "funeral") m = v; });
+  if (!m) {
+    m = { id:"vid-funeral", kind:"funeral", name:"", has:false, when:"" };
+    store.videos.push(m); save();
+  }
+  return m;
+}
+function shareTitleFor(meta){
+  if (meta.kind === "funeral") return "A video for my funeral";
+  return "A video for " + ((meta.name && meta.name.trim()) || "my family");
+}
+function recordOrPick(meta, capture){
+  pickMedia("video/*", capture, function(file){
+    idbPut(meta.id, file, function(ok){
+      if (ok) { meta.has = true; meta.when = todayLine(); save(); }
+      renderVideos(); refreshStatuses();
+    });
+  });
+}
+function mediaButtons(meta){
+  var wrap = document.createElement("div");
+  wrap.className = "media-btns";
+  function btn(label, cls, fn){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "action-btn" + (cls ? " " + cls : "");
+    b.textContent = label;
+    b.addEventListener("click", fn);
+    wrap.appendChild(b);
+  }
+  if (meta.has) {
+    btn("🎥 RECORD A NEW ONE", "", function(){ recordOrPick(meta, "camcorder"); });
+    btn("📁 Pick a Different Video", "secondary", function(){ recordOrPick(meta, null); });
+    btn("📤 SEND TO FAMILY", "", function(){ shareMedia(meta.id, shareTitleFor(meta)); });
+  } else {
+    btn("🎥 Record a Video", "", function(){ recordOrPick(meta, "camcorder"); });
+    btn("📁 Pick from My Videos", "secondary", function(){ recordOrPick(meta, null); });
+  }
+  return wrap;
+}
+function fillVideoArea(area, meta){
+  if (!meta.has) {
+    var p = document.createElement("p");
+    p.className = "media-none";
+    p.textContent = "No video yet.";
+    area.appendChild(p);
+    return;
+  }
+  idbGet(meta.id, function(blob){
+    if (!blob) {
+      var p = document.createElement("p");
+      p.className = "media-none";
+      p.textContent = "This video couldn't be opened — record a new one and it will take its place.";
+      area.appendChild(p);
+      return;
+    }
+    var v = document.createElement("video");
+    v.className = "media-video";
+    v.controls = true;
+    v.setAttribute("playsinline", "");
+    v.preload = "metadata";
+    v.src = objUrl(blob);
+    area.appendChild(v);
+    if (meta.when) {
+      var w = document.createElement("p");
+      w.className = "media-when";
+      w.textContent = "Last updated " + meta.when + " — you can re-record it any time.";
+      area.appendChild(w);
+    }
+  });
+}
+function renderVideos(){
+  revokeUrls();
+  var fMount = document.getElementById("funeralVideo");
+  var famMount = document.getElementById("familyVideos");
+  if (!fMount || !famMount) return;
+  fMount.innerHTML = ""; famMount.innerHTML = "";
+  if (idbFailed || !window.indexedDB) {
+    var note = document.createElement("p");
+    note.className = "media-none";
+    note.textContent = "Videos aren't available here — your written messages still work just fine.";
+    fMount.appendChild(note);
+    return;
+  }
+  var fm = funeralMeta();
+  var fCard = entryCard("To be played at my funeral");
+  var fArea = document.createElement("div");
+  fCard.appendChild(fArea);
+  fCard.appendChild(mediaButtons(fm));
+  if (fm.has) {
+    fCard.appendChild(removeBtn(function(){
+      idbDel(fm.id, function(){
+        fm.has = false; fm.when = ""; save(); renderVideos(); refreshStatuses();
+      });
+    }));
+  }
+  fMount.appendChild(fCard);
+  fillVideoArea(fArea, fm);
+
+  store.videos.forEach(function(meta){
+    if (meta.kind !== "family") return;
+    var card = entryCard("A video message");
+    card.appendChild(makeField("Who this video is for", null, "text",
+      function(){ return meta.name; }, function(v){ meta.name = v; }));
+    var area = document.createElement("div");
+    card.appendChild(area);
+    card.appendChild(mediaButtons(meta));
+    card.appendChild(removeBtn(function(){
+      idbDel(meta.id, function(){});
+      store.videos = store.videos.filter(function(x){ return x !== meta; });
+      save(); renderVideos(); refreshStatuses();
+    }));
+    famMount.appendChild(card);
+    fillVideoArea(area, meta);
+  });
+}
+document.getElementById("addVideo").addEventListener("click", function(){
+  store.videos.push({ id:newId("vid"), kind:"family", name:"", has:false, when:"" });
+  save(); renderVideos(); refreshStatuses();
+});
+
+/* ---------- Will photos ---------- */
+/* Shrink a photo before keeping it (a whole will stays small enough to
+   keep on the phone); any trouble at all and the original is kept. */
+function shrinkImage(file, cb){
+  var done = false;
+  function finish(blob){ if (!done) { done = true; cb(blob || file); } }
+  try {
+    var img = new Image();
+    var timer = setTimeout(function(){ finish(null); }, 1500);
+    img.onload = function(){
+      clearTimeout(timer);
+      try {
+        var w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+        if (!w || !h) { finish(null); return; }
+        var scale = Math.min(1, 1600 / Math.max(w, h));
+        var c = document.createElement("canvas");
+        c.width = Math.round(w * scale); c.height = Math.round(h * scale);
+        var ctx = c.getContext("2d");
+        if (!ctx) { finish(null); return; }
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        if (c.toBlob) c.toBlob(function(b){ finish(b); }, "image/jpeg", 0.85);
+        else finish(null);
+      } catch(e) { finish(null); }
+    };
+    img.onerror = function(){ clearTimeout(timer); finish(null); };
+    img.src = objUrl(file);
+  } catch(e) { finish(null); }
+}
+function addWillPage(capture){
+  pickMedia("image/*", capture, function(file){
+    shrinkImage(file, function(blob){
+      var id = newId("willpage");
+      idbPut(id, blob, function(ok){
+        if (ok) { store.willPages.push({ id:id }); save(); }
+        renderWillPages(); refreshStatuses();
+      });
+    });
+  });
+}
+function renderWillPages(){
+  revokeUrls();
+  var mount = document.getElementById("willPages");
+  if (!mount) return;
+  mount.innerHTML = "";
+  if (!store.willPages.length) {
+    var p = document.createElement("p");
+    p.className = "media-none";
+    p.textContent = "No pages yet — photograph your will one page at a time.";
+    mount.appendChild(p);
+    return;
+  }
+  store.willPages.forEach(function(page, idx){
+    var wrap = document.createElement("div");
+    wrap.className = "will-page";
+    var head = document.createElement("div");
+    head.className = "entry-head"; head.textContent = "Page " + (idx + 1);
+    wrap.appendChild(head);
+    var img = document.createElement("img");
+    img.alt = "Page " + (idx + 1) + " of my signed will";
+    img.addEventListener("click", function(){ img.classList.toggle("full"); });
+    wrap.appendChild(img);
+    idbGet(page.id, function(blob){ if (blob) img.src = objUrl(blob); });
+    wrap.appendChild(removeBtn(function(){
+      idbDel(page.id, function(){});
+      store.willPages = store.willPages.filter(function(x){ return x !== page; });
+      save(); renderWillPages(); refreshStatuses();
+    }));
+    mount.appendChild(wrap);
+  });
+}
+document.getElementById("photoWillPage").addEventListener("click", function(){ addWillPage("environment"); });
+document.getElementById("pickWillPage").addEventListener("click", function(){ addWillPage(null); });
+
 /* ================= Share My Plan ================= */
 function buildPlan(){
   var lines = [];
@@ -639,6 +1056,25 @@ function buildPlan(){
       lines.push("");
     });
   });
+  if (store.willPages.length) {
+    lines.push("================================");
+    lines.push("PHOTOS OF MY SIGNED WILL");
+    lines.push("================================");
+    lines.push("I photographed " + store.willPages.length + (store.willPages.length === 1 ? " page" : " pages") + " of my signed will. The photos are kept in the When I'm Gone app on my phone.");
+    lines.push("");
+  }
+  var vids = store.videos.filter(function(v){ return v.has; });
+  if (vids.length) {
+    lines.push("================================");
+    lines.push("VIDEO MESSAGES");
+    lines.push("================================");
+    vids.forEach(function(v){
+      if (v.kind === "funeral") lines.push("For my funeral — a video to be played at the service.");
+      else lines.push("For " + ((v.name && v.name.trim()) || "my family") + " — a video message.");
+    });
+    lines.push("These videos are kept in the When I'm Gone app on my phone.");
+    lines.push("");
+  }
   if (sec2Filled(store.call)) {
     lines.push("================================");
     lines.push("WHO TO CALL");
